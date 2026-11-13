@@ -209,19 +209,29 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _deleteExpense(int id) async {
+    final index = _expenses.indexWhere((item) => item.id == id);
+    if (index == -1) return;
+    final removed = _expenses[index];
+
     setState(() {
-      _expenses.removeWhere((item) => item.id == id);
+      _expenses.removeAt(index);
     });
 
     await DatabaseHelper().deleteExpense(id); // Delete from DB
 
+    if (!mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: const Text('Expense deleted'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () {
-            // Optional: Implement undo later
+          onPressed: () async {
+            await DatabaseHelper().insertExpense(removed); // Restore in DB
+            if (!mounted) return;
+            setState(() {
+              final at = index > _expenses.length ? _expenses.length : index;
+              _expenses.insert(at, removed); // Put it back where it was
+            });
           },
         ),
       ),

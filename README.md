@@ -17,7 +17,7 @@ Masroufi (Arabic for "my allowance") is a simple mobile app for tracking everyda
 - **Add expenses** in EGP through a bottom-sheet form with validation: the title is required and the amount must be a valid number
 - **Running total** of all loaded expenses, always visible in the app bar
 - **Infinite scroll**: expenses load 10 at a time as you scroll down
-- **Swipe to delete**: swipe an expense to the left to remove it
+- **Swipe to delete**: swipe an expense to the left to remove it, with an **Undo** button to bring it back in the same place
 - **Persistent storage** with SQLite, so your expenses are still there after you close the app
 - **Empty state** with a hint to add your first expense
 - Material 3 design with a letter avatar for each expense and snack bar feedback
@@ -80,7 +80,6 @@ The tests cover the model, the home screen and empty state, the add form and its
 The app uses `sqflite`, which supports **Android, iOS and macOS**. Running it on web, Windows or Linux would need an additional SQLite package such as `sqflite_common_ffi`.
 
 ## Known Limitations and Ideas
-- The **Undo** button on the delete snack bar is not wired up yet, so a deleted expense is not restored
 - Pagination loads every expense and slices the list in memory, instead of querying the database one page at a time
 - Ideas: categories, an edit screen and a monthly summary
 
